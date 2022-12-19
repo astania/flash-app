@@ -10,28 +10,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_19_191058) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_19_192123) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "cards", force: :cascade do |t|
-    t.integer "deck_id"
     t.text "question"
     t.text "answer"
+    t.integer "deck_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "deck_subjects", force: :cascade do |t|
+    t.integer "deck_id"
+    t.integer "subject_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "decks", force: :cascade do |t|
     t.integer "user_id"
-    t.integer "subject_id"
     t.boolean "public"
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "subjects", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_decks", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "deck_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
