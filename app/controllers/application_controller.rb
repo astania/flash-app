@@ -1,9 +1,12 @@
 class ApplicationController < ActionController::API
+
+    # inheriting from ActionController gives us the ability to define the actions within the controllers 
     include ActionController::Cookies
 
-    def hello_world
-        session[:count] = (session[:count] || 0) + 1
-        render json: { count: session[:count] }
+    # before_action :authorized
+
+    def authorized
+      return render json: { error: "Not Authorized" }, status: :unauthorized unless session.include? :user_id
     end
 
 end
