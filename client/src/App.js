@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import WelcomePage from "./login_components/WelcomePage";
 import LoginPage from "./login_components/LoginPage"
+import Navigation from "./navigation_components/Navigation"
 
 // sudo service postgresql start
 
@@ -13,7 +14,7 @@ function App() {
 
     <BrowserRouter>
       {/* <Header /> */}
-      {/* {!!loggedIn ? <NavBar /> : ""} */}
+      <Navigation /> 
       
       <Routes>
         {/* <Route exact path="/" element={!!loggedIn ? <WelcomePage user={user} /> : <Login user={user} setUser={setUser} onLogin={onLogin} />} /> */}
