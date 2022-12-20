@@ -5,7 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Link } from "react-router-dom";
 
 
-const NavBar = () => {
+const Navigation = () => {
   return (
     <div className="mb-3">
 
@@ -23,4 +23,4 @@ const NavBar = () => {
   )
 }
 
-export default NavBar;
+export default Navigation;
