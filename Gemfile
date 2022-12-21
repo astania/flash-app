@@ -48,3 +48,5 @@ end
 
 
 gem "active_model_serializers", "~> 0.10.13"
+
+gem 'devise', '~> 4.8', '>= 4.8.1'
