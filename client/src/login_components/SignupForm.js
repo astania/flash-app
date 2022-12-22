@@ -10,7 +10,7 @@ function SignupForm({ isNewUser, setIsNewUser, onLogin }) {
     const [errors, setErrors] = useState([])
 
     const blankFormTemplate = {
-        name: "",
+        username: "",
         email: "",
         password: "",
         profile_image: ""
@@ -50,7 +50,7 @@ function SignupForm({ isNewUser, setIsNewUser, onLogin }) {
             <Form className="center" onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formName">
                     <Form.Label>Name</Form.Label>
-                    <Form.Control type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange}/>
+                    <Form.Control type="text" name="username" placeholder="Username" value={formData.username} onChange={handleChange}/>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formEmail">
