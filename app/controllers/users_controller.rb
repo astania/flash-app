@@ -5,6 +5,11 @@ class UsersController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
   rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity
 
+  def index 
+    users = User.all 
+    render json: users, include: ['decks', 'decks.cards']
+  end 
+  
   def create
     user = User.create!(user_params)
     if user.valid?
@@ -17,7 +22,7 @@ class UsersController < ApplicationController
   def show
     find_user
     if @user
-      render json: @user
+      render json: @user, include: ['decks', 'decks.cards']
     end
   end
 

@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   
   get '/me', to: 'users#show'
 
+  get '/public-decks', to: 'decks#public'
+
   get '*path',
   to: 'fallback#index',
   constraints: ->(req) { !req.xhr? && req.format.html? }
