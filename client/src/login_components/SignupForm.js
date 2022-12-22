@@ -49,7 +49,7 @@ function SignupForm({ isNewUser, setIsNewUser, onLogin }) {
             <h2>Log In Below:</h2>
             <Form className="center" onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formName">
-                    <Form.Label>Name</Form.Label>
+                    <Form.Label>Username</Form.Label>
                     <Form.Control type="text" name="username" placeholder="Username" value={formData.username} onChange={handleChange}/>
                 </Form.Group>
 

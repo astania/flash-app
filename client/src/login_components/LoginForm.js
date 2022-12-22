@@ -1,9 +1,34 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import jwt_decode from "jwt-decode";
 
 
-function LoginForm({ isNewUser, setIsNewUser, onLogin }) {
+function LoginForm({ isNewUser, setIsNewUser, onLogin, setUser }) {
+
+    const handleCallbackResponse = (response) => {
+        // console.log("jtw token", response.credential)
+        const userObject = jwt_decode(response.credential)
+        const googleUser = {username: userObject.name, email: userObject.email, password: "", profile_image: userObject.picture}
+        setUser(googleUser)
+      }
+
+    useEffect(() => {
+        /*global google*/ 
+    
+        google.accounts.id.initialize({
+          client_id: "574245248770-osgu5o1inmda8a85edfq4ncp1526frt0.apps.googleusercontent.com",
+          callback: handleCallbackResponse
+        })
+    
+        google.accounts.id.renderButton(
+          document.getElementById("signInDiv"), 
+          { theme: "outline", size: "large"}
+        )
+    
+      }, [])
+    
+    
 
     const [errors, setErrors] = useState([])
 
@@ -60,6 +85,7 @@ function LoginForm({ isNewUser, setIsNewUser, onLogin }) {
                 <Button variant="primary" type="submit">
                     Log In
                 </Button>
+                <div id="signInDiv"></div>
                 {/* {errors.length > 0 ?
                     <div style={{ color: "red" }}>
                         {errors.map((error) => (
