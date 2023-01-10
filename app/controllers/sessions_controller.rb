@@ -4,10 +4,8 @@ class SessionsController < ApplicationController
 
     # DELETE '/logout'
     def destroy
-        pp("pre", session)
         session.delete :user_id 
         head :no_content
-        pp("post", session)
     end
 
     # POST '/login'
