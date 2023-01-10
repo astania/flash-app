@@ -50,11 +50,11 @@ function App() {
 
     <BrowserRouter>
       <Header />
-      <Navigation /> 
+      <Navigation onLogout={onLogout} loggedIn={loggedIn}/> 
    
       <Routes>
         {/* <Route exact path="/" element={!!loggedIn ? <WelcomePage user={user} /> : <Login user={user} setUser={setUser} onLogin={onLogin} />} /> */}
-        <Route exact path="/" element={!!loggedIn ? <WelcomePage onLogout={onLogout} user={user}/> : <LoginPage onLogin={onLogin} />} />
+        <Route exact path="/" element={!!loggedIn ? <WelcomePage onLogout={onLogout}/> : <LoginPage onLogin={onLogin} />} />
         <Route exact path="/subjects" element={ <Subjects /> } />
         <Route exact path="/profile" element={ <Profile /> } />
         <Route exact path="/create" element={ <CreateDecks /> } />
