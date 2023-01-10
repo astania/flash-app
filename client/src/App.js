@@ -18,7 +18,6 @@ function App() {
     name: "",
     email: "",
     profile_image: "",
-    password: ""
   }
   const [loggedIn, setLoggedIn] = useState(false)
   const [user, setUser] = useState(blankUserTemplate)

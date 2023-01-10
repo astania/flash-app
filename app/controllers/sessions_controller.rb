@@ -10,9 +10,9 @@ class SessionsController < ApplicationController
 
     # POST '/login'
     def create 
-        user = User.find_by(email: params[:formData][:email])
+        user = User.find_by(email: params[:googleUser][:email])
         pp session
-        if user&.authenticate(params[:formData][:password])
+        if user
             session[:user_id] = user.id
             render json: user
         else 

@@ -47,7 +47,7 @@ class UsersController < ApplicationController
   end 
 
   def user_params 
-    params.permit(:email, :password, :username, :profile_image)
+    params.permit(:email, :username, :profile_image)
   end 
   
   def render_unprocessable_entity(invalid)
