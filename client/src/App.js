@@ -10,9 +10,11 @@ import Footer from "./navigation_components/Footer";
 import Header from "./navigation_components/Header";
 
 
+
 // sudo service postgresql start
 
 function App() {
+ 
 
   const blankUserTemplate = {
     name: "",
@@ -21,9 +23,6 @@ function App() {
   }
   const [loggedIn, setLoggedIn] = useState(false)
   const [user, setUser] = useState(blankUserTemplate)
-
- 
-
 
 
   useEffect(() => {
@@ -39,6 +38,10 @@ function App() {
   const onLogin = (userInfo) => {
     setLoggedIn(true)
     setUser(userInfo)
+
+    fetch("/logout", {
+      method: "DELETE"
+    })
   }
 
   const onLogout = () => {

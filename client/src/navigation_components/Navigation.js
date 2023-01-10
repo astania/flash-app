@@ -4,12 +4,16 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/esm/Button';
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 
 const Navigation = ({ onLogout, loggedIn }) => {
+  const navigate = useNavigate()
 
   const handleLogoutClick = () => {
-    onLogout()
+    fetch("/logout", {
+      method: "DELETE",
+  }).then(() => onLogout()).then(navigate("/"))  
   }
 
   return (
