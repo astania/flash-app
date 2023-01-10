@@ -6,9 +6,9 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-User.create({email: "annaestania@gmail.com", username: "Anna Stania", profile_image: "https://i.imgur.com/M6E6DeE.jpeg"})
-User.create({email: "schroena@gmail.com", username: "Anna Schroen", profile_image: "https://i.imgur.com/ioRE0px.jpeg"})
-User.create({email: "jonas.stania@gmail.com", username: "Jonas Stania", profile_image: "https://i.imgur.com/GVcd0T4_d.webp?maxwidth=520&shape=thumb&fidelity=high"})
+User.create({email: "annaestania@gmail.com", profile_image: "https://i.imgur.com/M6E6DeE.jpeg"})
+User.create({email: "schroena@gmail.com", profile_image: "https://i.imgur.com/ioRE0px.jpeg"})
+User.create({email: "jonas.stania@gmail.com", profile_image: "https://i.imgur.com/GVcd0T4_d.webp?maxwidth=520&shape=thumb&fidelity=high"})
 
 Deck.create({user_id: 1, public: true, name: "German"})
 Deck.create({user_id: 2, public: true, name: "Math"})
