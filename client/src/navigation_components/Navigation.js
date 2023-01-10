@@ -7,13 +7,13 @@ import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 
 
-const Navigation = ({ onLogout, loggedIn }) => {
+const Navigation = ({ onLogout }) => {
   const navigate = useNavigate()
 
   const handleLogoutClick = () => {
     fetch("/logout", {
       method: "DELETE",
-  }).then(() => onLogout()).then(navigate("/"))  
+  }).then(onLogout()).then(navigate("/"))  
   }
 
   return (
@@ -26,7 +26,7 @@ const Navigation = ({ onLogout, loggedIn }) => {
             <Nav.Link as={Link} to="/subjects">Subjects</Nav.Link>
             <Nav.Link as={Link} to="/create">Create</Nav.Link>
             <Nav.Link as={Link} to="/profile">Profile</Nav.Link>
-            {loggedIn ? <Button variant="outline-secondary" onClick={handleLogoutClick}>log out</Button> : ""}
+            <Button variant="outline-secondary" onClick={handleLogoutClick}>log out</Button>
 
           </Nav>
         </Container>
