@@ -10,13 +10,8 @@ class SessionsController < ApplicationController
 
     # POST '/login'
     def create 
-        user = User.find_by(email: params[:googleUser][:email])
-        if user
-            session[:user_id] = user.id
-            render json: user
-        else 
-            render json: {errors: ["Invalid email or password"]}, status: :unauthorized
-        end 
-
+        user = User.find_or_create_by(email: params[:googleUser][:email], profile_image: params[:googleUser][:profile_image])
+        session[:user_id] = user.id
+        render json: user
     end 
 end

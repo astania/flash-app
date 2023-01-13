@@ -13,17 +13,19 @@ import Header from "./navigation_components/Header";
 
 function App() {
  
-  const blankUserTemplate = {
-    name: "",
-    email: "",
-    profile_image: "",
-  }
+  // const blankUserTemplate = {
+  //   email: "",
+  //   profile_image: "",
+  //   decks: []
+  // }
   const [loggedIn, setLoggedIn] = useState(false)
-  const [user, setUser] = useState(blankUserTemplate)
+  const [user, setUser] = useState({})
+  console.log("user",user)
 
   useEffect(() => {
     //to users#show
     fetch("/me").then((response) => {
+      console.log("response from /me:",response)
       if (response.ok) {
         response.json().then((userInfo) => setUser(userInfo))
           .then(setLoggedIn(true))
@@ -32,16 +34,16 @@ function App() {
   }, [])
 
   const onLogin = (userInfo) => {
-    setLoggedIn(true)
     setUser(userInfo)
-
-    fetch("/logout", {
-      method: "DELETE"
-    })
+    setLoggedIn(true)
+    console.log("returned from login page",userInfo)
   }
 
   const onLogout = () => {
-    setUser(blankUserTemplate)
+    fetch("/logout", {
+      method: "DELETE"
+    })
+    setUser({})
     setLoggedIn(false)
   }
 

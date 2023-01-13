@@ -4,7 +4,7 @@ import { SocialIcon } from 'react-social-icons'
 
 const Footer = () => {
   return (
-    <footer className="footer mt-auto bg-light">
+    <footer className="footer mt-auto bg-light" fixed="bottom">
       <div className="row" style={{ display: "flex", height: "50px", marginBottom: "-50px" }}>
         <div className="col-6" style={{ width: "50%", float: "left" }}>
           <h5>Anna Stania Productions</h5>

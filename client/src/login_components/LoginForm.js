@@ -24,8 +24,7 @@ function LoginForm({ onLogin }) {
                 if (res.ok) {
                     res.json().then(userInfo => onLogin(userInfo))
                 } else {
-                    // res.json().then((errorData) => setErrors(errorData.errors))
-                    console.log("error!")
+                    res.json().then((errorData) => setErrors(errorData.errors))
                 }
             })
             document.getElementById("signInDiv").hidden = true

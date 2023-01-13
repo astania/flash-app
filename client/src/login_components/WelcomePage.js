@@ -5,7 +5,7 @@ const WelcomePage = ({ user }) => {
 
   return (
     <div>
-      <h1>Welcome to Flash App</h1>
+      <h1>Welcome {user.email} to Flash App</h1>
       <p>To get started, </p>
     </div>
   )

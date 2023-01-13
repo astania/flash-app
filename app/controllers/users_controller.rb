@@ -10,19 +10,21 @@ class UsersController < ApplicationController
     render json: users, include: ['decks', 'decks.cards']
   end 
   
-  def create
-    user = User.create!(user_params)
-    if user.valid?
-      session[:user_id] = user.id
-      render json: user, status: :created
-    end
-  end
+  # def create
+  #   user = User.create!(user_params)
+  #   if user.valid?
+  #     session[:user_id] = user.id
+  #     render json: user, status: :created
+  #   end
+  # end
   
   # GET '/me'
   def show
     find_user
     if @user
       render json: @user, include: ['decks', 'decks.cards']
+    else
+      render json: {messages: "No user found"}, status: :not_found
     end
   end
 
