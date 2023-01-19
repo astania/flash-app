@@ -68,8 +68,8 @@ function App() {
       <Routes>
         <Route exact path="/" element={!!loggedIn ? <WelcomePage onLogout={onLogout} user={user}/> : <LoginPage onLogin={onLogin} />} />
         <Route exact path="/subjects" element={ <SubjectsContainer subjects={subjects}/> } />
-        <Route exact path="/profile" element={ <Profile /> } />
-        <Route exact path="/create" element={ <CreateDecks /> } />
+        <Route exact path="/profile" element={ <Profile user={user} /> } />
+        <Route exact path="/create" element={ <CreateDecks subjects={subjects}/> } />
         <Route exact path="/login" element={<LoginPage onLogin={onLogin}/>} />
       </Routes>
       <Footer />

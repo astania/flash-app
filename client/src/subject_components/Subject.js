@@ -6,14 +6,12 @@ const Subject = ({ sub }) => {
     return (
         <div>
             <div className="col-sm-6 col-lg-4">
-                <div className="card">
-                    <Card style={{ width: '15rem' }}>
+                    <Card style={{ width: '18rem' }} className="text-center">
                         <Card.Body>
                             <Card.Title>{sub.name}</Card.Title>
-                            <Button variant="primary">See all {sub.name} Decks</Button>
+                            <Button variant="outline-primary">See all {sub.name} Decks</Button>
                         </Card.Body>
                     </Card>
-                </div>
             </div>
         </div>
     )
