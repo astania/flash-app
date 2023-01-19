@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   
   get '/me', to: 'users#show'
 
-  get '/public-decks', to: 'decks#public'
+  get '/public_decks', to: 'decks#public'
 
   get '*path',
   to: 'fallback#index',

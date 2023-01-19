@@ -22,7 +22,7 @@ class DecksController < ApplicationController
   end
 
   def public 
-    public_decks = Deck.where(public: true)
+    public_decks = Deck.select{|deck| deck.public}
     render json: public_decks
   end 
 
@@ -47,7 +47,7 @@ class DecksController < ApplicationController
   end 
 
   def deck_params 
-    params.permit(:user_id, :public, :name)
+    params.permit(:public, :name)
   end 
   
   def render_unprocessable_entity(invalid)

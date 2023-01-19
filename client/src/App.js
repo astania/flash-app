@@ -8,6 +8,8 @@ import Subjects from "./subject_components/Subjects";
 import CreateDecks from "./create_decks_components/CreateDecks";
 import Footer from "./navigation_components/Footer";
 import Header from "./navigation_components/Header";
+import { fetchDecks } from "./public_decks_components/publicDecksSlice";
+import { useDispatch, useSelector } from 'react-redux';
 
 // sudo service postgresql start
 
@@ -20,12 +22,13 @@ function App() {
   // }
   const [loggedIn, setLoggedIn] = useState(false)
   const [user, setUser] = useState({})
+  const decks = useSelector(state => state.decks.entities)
+  const dispatch = useDispatch()
   console.log("user",user)
 
   useEffect(() => {
     //to users#show
     fetch("/me").then((response) => {
-      console.log("response from /me:",response)
       if (response.ok) {
         response.json().then((userInfo) => setUser(userInfo))
           .then(setLoggedIn(true))
@@ -33,11 +36,16 @@ function App() {
     })
   }, [])
 
+  useEffect(() => {
+    dispatch(fetchDecks())
+  }, [])
+
+
   const onLogin = (userInfo) => {
     setUser(userInfo)
     setLoggedIn(true)
-    console.log("returned from login page",userInfo)
   }
+  console.log("did setting decks work?", decks)
 
   const onLogout = () => {
     fetch("/logout", {
