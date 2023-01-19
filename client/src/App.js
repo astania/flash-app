@@ -4,11 +4,12 @@ import WelcomePage from "./login_components/WelcomePage";
 import LoginPage from "./login_components/LoginPage"
 import Navigation from "./navigation_components/Navigation"
 import Profile from "./profile_components/Profile";
-import Subjects from "./subject_components/Subjects";
+import SubjectsContainer from "./subject_components/Subjects";
 import CreateDecks from "./create_decks_components/CreateDecks";
 import Footer from "./navigation_components/Footer";
 import Header from "./navigation_components/Header";
 import { fetchDecks } from "./public_decks_components/publicDecksSlice";
+import { fetchSubjects } from "./subject_components/subjectsSlice";
 import { useDispatch, useSelector } from 'react-redux';
 
 // sudo service postgresql start
@@ -23,6 +24,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [user, setUser] = useState({})
   const decks = useSelector(state => state.decks.entities)
+  const subjects = useSelector(state => state.subjects.entities)
   const dispatch = useDispatch()
   console.log("user",user)
 
@@ -38,6 +40,7 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchDecks())
+    dispatch(fetchSubjects())
   }, [])
 
 
@@ -45,7 +48,8 @@ function App() {
     setUser(userInfo)
     setLoggedIn(true)
   }
-  console.log("did setting decks work?", decks)
+  console.log("decks in state", decks)
+  console.log("subjects in state", subjects)
 
   const onLogout = () => {
     fetch("/logout", {
@@ -63,7 +67,7 @@ function App() {
    
       <Routes>
         <Route exact path="/" element={!!loggedIn ? <WelcomePage onLogout={onLogout} user={user}/> : <LoginPage onLogin={onLogin} />} />
-        <Route exact path="/subjects" element={ <Subjects /> } />
+        <Route exact path="/subjects" element={ <SubjectsContainer subjects={subjects}/> } />
         <Route exact path="/profile" element={ <Profile /> } />
         <Route exact path="/create" element={ <CreateDecks /> } />
         <Route exact path="/login" element={<LoginPage onLogin={onLogin}/>} />
