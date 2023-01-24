@@ -22,7 +22,7 @@ function App() {
   //   decks: []
   // }
   const [loggedIn, setLoggedIn] = useState(false)
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState(null)
   const decks = useSelector(state => state.decks.entities)
   const subjects = useSelector(state => state.subjects.entities)
   const dispatch = useDispatch()
@@ -36,9 +36,6 @@ function App() {
           .then(setLoggedIn(true))
       }
     })
-  }, [])
-
-  useEffect(() => {
     dispatch(fetchDecks())
     dispatch(fetchSubjects())
   }, [])
@@ -48,8 +45,8 @@ function App() {
     setUser(userInfo)
     setLoggedIn(true)
   }
-  console.log("decks in state", decks)
-  console.log("subjects in state", subjects)
+  // console.log("decks in state", decks)
+  // console.log("subjects in state", subjects)
 
   const onLogout = () => {
     fetch("/logout", {
