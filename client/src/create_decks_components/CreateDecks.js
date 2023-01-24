@@ -14,13 +14,12 @@ const CreateDecks = ({ subjects }) => {
   const blankDeckTemplate = {
     name: "",
     subject: "",
-    public: "",
+    public: true,
     cards: [blankCardTemplate]
   }
 
   const [deckInput, setDeckInput] = useState(blankDeckTemplate)
-
-  console.log("deckInput", deckInput)
+  console.log(deckInput)
 
   const handleAddCardClick = () => {
     const updatedCards = [...deckInput.cards, blankCardTemplate]
@@ -32,22 +31,24 @@ const CreateDecks = ({ subjects }) => {
     let value = e.target.value
     let name = e.target.name
 
-    if (e.target.type === "check"){
+    if (e.target.type == "checkbox"){
       value = e.target.checked
     } 
-    
-    console.log("checked:", e.target.checked)
-    console.log("value", value)
-      
+  
     setDeckInput({...deckInput, [name]: value})
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
     
 
+    
   }
 
   return (
     <div>
       <Container style={{ width: '40rem' }}>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formName">
             <h3>Deck Name</h3>
             <Form.Control type="text" placeholder="Algebra 301 Chapter 4 Quiz" name="name" onChange={handleChange} value={deckInput.name}/>
@@ -58,7 +59,7 @@ const CreateDecks = ({ subjects }) => {
             </Form.Select>
 
             <Form.Label>Do you want to make this deck public?</Form.Label>
-            <Form.Check type="checkbox" label="Yes" name="public" onChange={handleChange} value={deckInput.public}/>
+            <Form.Check type="checkbox"  label="Yes" name="public" onChange={e => handleChange(e)} defaultChecked={true}/>
           </Form.Group>
           {deckInput.cards.map((card, index) => <CardForm key={index} card={card} index={index} onChange={handleChange} deckInput={deckInput} setDeckInput={setDeckInput}/>)}
 
