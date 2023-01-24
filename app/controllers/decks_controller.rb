@@ -10,7 +10,10 @@ class DecksController < ApplicationController
   end 
   
   def create
-    deck = Deck.create!(deck_params)
+    deck = Deck.create!(user_id: params[:user_id], public: params[:public], name: params[:name])
+    user_deck = UserDeck.create!(deck_id: deck.id, user_id: params[:user_id]) 
+    deck_subject = DeckSubject.create!(deck_id: deck.id, subject_id: params[:subjects])
+    params[:cards].each{|card| Card.create!(deck_id: deck.id, question: card[:question], answer: card[:answer])}
     render json: deck, status: :created
   end
   
@@ -47,7 +50,7 @@ class DecksController < ApplicationController
   end 
 
   def deck_params 
-    params.permit(:public, :name)
+    params.require(:deck).permit(:public, :name, :subjects, :user_id, cards: [:id, :question, :answer])
   end 
   
   def render_unprocessable_entity(invalid)

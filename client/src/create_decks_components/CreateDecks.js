@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import CardForm from './CardForm';
 import Container from 'react-bootstrap/Container';
 
-const CreateDecks = ({ subjects }) => {
+const CreateDecks = ({ subjects, user }) => {
 
   const blankCardTemplate = {
     question: "",
@@ -13,12 +13,13 @@ const CreateDecks = ({ subjects }) => {
 
   const blankDeckTemplate = {
     name: "",
-    subject: "",
+    subjects: "",
     public: true,
     cards: [blankCardTemplate]
   }
 
   const [deckInput, setDeckInput] = useState(blankDeckTemplate)
+  const [errors, setErrors] = useState([])
   console.log(deckInput)
 
   const handleAddCardClick = () => {
@@ -31,7 +32,7 @@ const CreateDecks = ({ subjects }) => {
     let value = e.target.value
     let name = e.target.name
 
-    if (e.target.type == "checkbox"){
+    if (e.target.type === "checkbox"){
       value = e.target.checked
     } 
   
@@ -40,27 +41,50 @@ const CreateDecks = ({ subjects }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    
 
-    
+    deckInput.user_id = user.id
+  
+    fetch("/decks", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(deckInput),
+    })
+      .then(res => {
+        if (res.ok) {
+          res.json().then(deckInfo => console.log(deckInfo))
+        } else {
+          res.json().then((errorData) => setErrors(errorData.errors))
+        }
+      })
+
+
   }
 
   return (
     <div>
-      <Container style={{ width: '40rem' }}>
+      {user ? <Container style={{ width: '40rem' }}>
         <Form onSubmit={handleSubmit}>
+
           <Form.Group className="mb-3" controlId="formName">
             <h3>Deck Name</h3>
+          
             <Form.Control type="text" placeholder="Algebra 301 Chapter 4 Quiz" name="name" onChange={handleChange} value={deckInput.name}/>
+            
             <Form.Label>Subject:</Form.Label>
-            <Form.Select aria-label="subject" name="subject" onChange={handleChange}>
+            
+            <Form.Select aria-label="subject" name="subjects" onChange={handleChange}>
               <option>Subject:</option>
-              {subjects.map(subject => <option key={subject.id} value={subject.name}>{subject.name}</option>)}
+              {subjects.map(subj => <option key={subj.id} value={parseInt(subj.id)}>{subj.name}</option>)}
             </Form.Select>
 
             <Form.Label>Do you want to make this deck public?</Form.Label>
+            
             <Form.Check type="checkbox"  label="Yes" name="public" onChange={e => handleChange(e)} defaultChecked={true}/>
+          
           </Form.Group>
+
           {deckInput.cards.map((card, index) => <CardForm key={index} card={card} index={index} onChange={handleChange} deckInput={deckInput} setDeckInput={setDeckInput}/>)}
 
           <Button variant="secondary" onClick={handleAddCardClick}>
@@ -71,7 +95,8 @@ const CreateDecks = ({ subjects }) => {
             Save Deck
           </Button>
         </Form>
-      </Container>
+        {errors}
+      </Container> : <p>loading...</p> }
     </div>
   )
 }

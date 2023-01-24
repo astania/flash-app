@@ -50,6 +50,7 @@ function LoginForm({ onLogin }) {
         <div className="center">
             <h2>Log In or Sign Up:</h2>
             <div id="signInDiv"></div>
+            {errors ? <p> {errors} </p> : "" }
         </div>
     );
 }
