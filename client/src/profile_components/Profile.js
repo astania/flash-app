@@ -15,8 +15,6 @@ const Profile = ({ user, onLogout, setCurrentDeck }) => {
   }
 
 
-
-
   return (
     <div>
       {user ? <Card className="text-center" style={{ width: '18rem' }}>

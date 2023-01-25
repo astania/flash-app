@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 const DeckDisplay = ({ currentDeck }) => {
     const [currentIndex, setCurrentIndex] = useState(0)
     const [currentCard, setCurrentCard] = useState(currentDeck.cards[currentIndex])
+    const [flipToAnswer, setFlipToAnswer] = useState(false)
 
 
     const handleNextClick = () => {
@@ -13,8 +14,8 @@ const DeckDisplay = ({ currentDeck }) => {
             const newIndex = currentIndex + 1
             setCurrentIndex(newIndex)
             setCurrentCard(currentDeck.cards[newIndex])
+            setFlipToAnswer(false)
         }
-
     }
 
     const handlePreviousClick = () => {
@@ -22,18 +23,19 @@ const DeckDisplay = ({ currentDeck }) => {
             const newIndex = currentIndex - 1
             setCurrentIndex(newIndex)
             setCurrentCard(currentDeck.cards[newIndex])
+            setFlipToAnswer(false)
         }
     }
 
     return (
         <div>
-            {currentDeck ? <Container >
+            {currentDeck ? <Container className="text-center" >
                 <h3>{currentDeck.name}</h3>
-                {currentCard ? <FlashCard currentCard={currentCard} /> : <p>...loading</p>}
+                {currentCard ? <FlashCard currentCard={currentCard} flipToAnswer={flipToAnswer} setFlipToAnswer={setFlipToAnswer} /> : <p>...loading</p>}
                 <Button variant="secondary" onClick={() => handlePreviousClick()}>Previous</Button>
-                
                 <Button variant="secondary" onClick={() => handleNextClick()}>Next</Button>
                 <p>{currentIndex + 1} of {currentDeck.cards.length}</p>
+                <em><p>Click the card to see the answer!</p></em>
             </Container>
 
                 : <p>...loading</p>}

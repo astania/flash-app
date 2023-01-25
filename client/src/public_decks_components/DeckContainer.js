@@ -23,10 +23,15 @@ const DeckContainer = ({ deck, setCurrentDeck }) => {
     setIsDeckSelected(!isDeckSelected)
   }
 
-  const handleStudyClick= () => {
+  const handleStudyClick = () => {
     setCurrentDeck(deck)
     navigate(`decks/${deck.id}`)
   }
+
+  const handleEditClick = () => {
+    setCurrentDeck(deck)
+    navigate(`decks/${deck.id}/edit`)
+  } 
 
   return (
     <div>
@@ -35,9 +40,9 @@ const DeckContainer = ({ deck, setCurrentDeck }) => {
         {isDeckSelected ? <Card className="text-center" style={{ width: '18rem' }}>
           <Card.Body>
             <Card.Title> {deck.name}</Card.Title>
-            <Card.Text>
+            <Card.Text as="div">
               <Button variant="primary" onClick={handleStudyClick}>Study</Button>
-              <Button variant="secondary">Edit</Button>
+              <Button variant="secondary" onClick={handleEditClick} >Edit</Button>
               <Button variant="secondary">Delete</Button>
             </Card.Text>
           </Card.Body>

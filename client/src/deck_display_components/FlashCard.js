@@ -1,16 +1,20 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Card from 'react-bootstrap/Card';
 
 
-const FlashCard = ({ currentCard }) => {
+const FlashCard = ({ currentCard, setFlipToAnswer, flipToAnswer }) => {
+    
+    
+    const handleClick = () => {
+        setFlipToAnswer(!flipToAnswer)
+    }
 
     return (
         <div>
-            <Card className="text-center" style={{ width: '30rem' }}>
+            <Card onClick={handleClick} className="text-center" style={{ width: '30rem' }}>
                 <Card.Body>
-                    <Card.Title>{currentCard.question}</Card.Title>
+                    <Card.Title>{flipToAnswer ? currentCard.answer : currentCard.question}</Card.Title>
                     <Card.Text>
-                        
                     </Card.Text>
                 </Card.Body>
             </Card>
