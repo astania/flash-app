@@ -88,7 +88,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={!!loggedIn ? <WelcomePage onLogout={onLogout} user={user}/> : <LoginPage onLogin={onLogin} />} />
         <Route exact path="/subjects" element={ <SubjectsContainer subjects={subjects}/> } />
-        <Route exact path="/profile" element={ <Profile user={user} onLogout={onLogout} setCurrentDeck={setCurrentDeck}/> } />
+        <Route exact path="/profile" element={ <Profile user={user} setUser={setUser} onLogout={onLogout} setCurrentDeck={setCurrentDeck}/> } />
         <Route exact path="/create" element={ <CreateDecks subjects={subjects} user={user} setUser={setUser}/> } />
         <Route exact path="/login" element={<LoginPage onLogin={onLogin} user={user}/>} />
         <Route path ="profile/decks/:id" element={<DeckDisplay currentDeck={currentDeck}/>}/>

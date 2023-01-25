@@ -5,7 +5,7 @@ import DeckContainer from '../public_decks_components/DeckContainer';
 import Image from 'react-bootstrap/Image'
 import { useNavigate } from 'react-router-dom';
 
-const Profile = ({ user, onLogout, setCurrentDeck }) => {
+const Profile = ({ user, setUser, onLogout, setCurrentDeck }) => {
   const navigate = useNavigate()
 
   const handleLogoutClick = () => {
@@ -24,7 +24,7 @@ const Profile = ({ user, onLogout, setCurrentDeck }) => {
           <Card.Title>Your email: {user.email}</Card.Title>
           <Card.Text>
             My Decks:
-            {user.decks.length > 0 ? user.decks.map(deck => <DeckContainer key={deck.id} deck={deck} setCurrentDeck={setCurrentDeck} />) : <span>Go to the Create tab to make some decks!</span>}
+            {user.decks.length > 0 ? user.decks.map(deck => <DeckContainer key={deck.id} deck={deck} setCurrentDeck={setCurrentDeck} setUser={setUser} user={user}/>) : <span>Go to the Create tab to make some decks!</span>}
             <Button onClick={handleLogoutClick} variant="secondary">Log Out</Button>
           </Card.Text>
         </Card.Body>
