@@ -11,7 +11,7 @@ const SingleSubject = ({ currentSubject, setCurrentSubject, setCurrentDeck, deck
 
     const handleClick = (e) => {
         const deckId = e.target.value
-        const selectedDeck = subjectDecks.filter(deck => deck.id == deckId)
+        const selectedDeck = subjectDecks.find(deck => deck.id == deckId)
         setCurrentDeck(selectedDeck)
         navigate(`/study/${deckId}`)
 
