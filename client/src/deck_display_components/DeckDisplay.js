@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 
 const DeckDisplay = ({ currentDeck }) => {
+    console.log("in display", currentDeck)
     const [currentIndex, setCurrentIndex] = useState(0)
     const [currentCard, setCurrentCard] = useState(currentDeck.cards[currentIndex])
     const [flipToAnswer, setFlipToAnswer] = useState(false)

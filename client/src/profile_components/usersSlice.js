@@ -21,7 +21,7 @@ const usersSlice = createSlice({
         userAdded(state, action){
             // console.log("action payload in userAdded", action.payload)
             // state.user.entities.push(action.payload)
-            console.log("in userAdded", state.user)
+            // console.log("in userAdded", state.user)
 
         },
         // userUpdated: userAdapter.upsertOne
@@ -32,6 +32,11 @@ const usersSlice = createSlice({
             // user.decks.push(action.payload)
         }
         ,
+        // userRemoved: userAdapter.removeOne
+        userRemoved(state, action) {
+          console.log("payload from userRemoved", action.payload)
+          state.entities.splice(action.payload, 1);
+        }
     },
     extraReducers: {
         // handle async actions: pending, fulfilled, rejected (for errors)
@@ -45,6 +50,6 @@ const usersSlice = createSlice({
       },
 })
 
-export const { userAdded, userUpdated } = usersSlice.actions
+export const { userAdded, userUpdated, userRemoved } = usersSlice.actions
 
 export default usersSlice.reducer

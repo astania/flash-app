@@ -3,7 +3,7 @@ import Subject from './Subject'
 import CardGroup from 'react-bootstrap/CardGroup'
 
 
-const SubjectsContainer = ({ subjects, decks }) => {
+const SubjectsContainer = ({ subjects, decks, currentSubject, setCurrentSubject }) => {
 
   console.log("decks", decks)
 
@@ -12,7 +12,7 @@ const SubjectsContainer = ({ subjects, decks }) => {
 
   return (
     <CardGroup>
-      {subjects.map(sub => <Subject key={sub.id} sub={sub} />)}
+      {subjects.map(sub => <Subject key={sub.id} sub={sub} currentSubject={currentSubject} setCurrentSubject={setCurrentSubject} />)}
     </CardGroup>
   )
 }

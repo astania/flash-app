@@ -1,28 +1,30 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-const Subject = ({ sub }) => {
+const Subject = ({ sub, setCurrentSubject, currentSubject }) => {
 
-    // const mathDecks = decks.filter(deck => deck.subjects.map(ds => ds.name).includes('Mathematics'))
-    // const germanDecks = decks.filter(deck => deck.subjects.map(ds => ds.name).includes('German Language'))
-    // const movieDecks = decks.filter(deck => deck.subjects.map(ds => ds.name).includes('Movies'))
-    // const englishDecks = decks.filter(deck => deck.subjects.map(ds => ds.name).includes('English Language'))
+    // const decks = useSelector(state => state.decks.entities)
+    const navigate = useNavigate()
 
 
-    const handleClick = () => {
-        console.log("click")
+    const  handleClick = () => {
+        setCurrentSubject(sub)
+        navigate(`decks/${currentSubject.id}`)
+        console.log("current Subject", currentSubject)
     }
 
     return (
         <div>
             <div className="col-sm-6 col-lg-4">
-                    <Card style={{ width: '18rem' }} className="text-center">
-                        <Card.Body>
-                            <Card.Title>{sub.name}</Card.Title>
-                            <Button onClick={handleClick} variant="outline-primary">See all {sub.name} Decks</Button>
-                        </Card.Body>
-                    </Card>
+                <Card style={{ width: '18rem' }} className="text-center">
+                    <Card.Body>
+                        <Card.Title>{sub.name}</Card.Title>
+                        <Button onClick={handleClick} variant="outline-primary">See all {sub.name} Decks</Button>
+                    </Card.Body>
+                </Card>
             </div>
         </div>
     )

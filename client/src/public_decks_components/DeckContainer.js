@@ -13,6 +13,7 @@ const DeckContainer = ({ deck, setCurrentDeck, user, setUser }) => {
 
 
   const handleDeckClick = () => {
+    
     setIsDeckSelected(!isDeckSelected)
   }
 
@@ -27,14 +28,13 @@ const DeckContainer = ({ deck, setCurrentDeck, user, setUser }) => {
   }
 
   const handleDeleteClick = () => {
-    dispatch(deckRemoved(deck.id))
-    const updatedUserDecks = user.decks.filter(d => d.id !== deck.id)
-    const updatedUser = { ...user }
-    updatedUser.decks = updatedUserDecks
+    // dispatch(deckRemoved(deck.id))
+    const filteredDecks = user.decks.filter(d => d.id !== deck.id )
+    setUser({...user, decks: filteredDecks})
     
     fetch(`/decks/${deck.id}`, {
       method: "DELETE",
-    }).then(() => setUser(updatedUser))
+    }).then(() => dispatch(deckRemoved(deck.id)))
   }
 
   return (

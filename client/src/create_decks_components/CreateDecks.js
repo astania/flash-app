@@ -5,11 +5,13 @@ import CardForm from './CardForm';
 import Container from 'react-bootstrap/Container';
 import { useDispatch } from 'react-redux';
 import { deckAdded } from '../public_decks_components/publicDecksSlice';
+import { useNavigate } from 'react-router-dom';
 // import { userUpdated } from '../profile_components/usersSlice';
 
 const CreateDecks = ({ subjects, user, setUser }) => {
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const blankCardTemplate = {
     question: "",
@@ -27,7 +29,7 @@ const CreateDecks = ({ subjects, user, setUser }) => {
   const [deckInput, setDeckInput] = useState(blankDeckTemplate)
   const [errors, setErrors] = useState([])
 
-  console.log("deck input", deckInput)
+  // console.log("deck input", deckInput)
 
 
   const handleAddCardClick = () => {
@@ -67,12 +69,15 @@ const CreateDecks = ({ subjects, user, setUser }) => {
               const updatedUserDecks = [...user.decks]
               updatedUserDecks.push(deckInfo)
               setUser({ ...user, decks: updatedUserDecks })
-              console.log("public:", deckInfo)
+              setDeckInput(blankDeckTemplate)
+              navigate("/profile")
+              
             } else {
               const updatedUserDecks = [...user.decks]
               updatedUserDecks.push(deckInfo)
               setUser({ ...user, decks: updatedUserDecks })
-              console.log("not public:", deckInfo)
+              setDeckInput(blankDeckTemplate)
+              navigate("/profile")
             }
           })
         } else {
