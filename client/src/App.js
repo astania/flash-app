@@ -22,22 +22,15 @@ import { useDispatch, useSelector } from 'react-redux';
 
 function App() {
  
-  // const blankUserTemplate = {
-  //   email: "",
-  //   profile_image: "",
-  //   decks: []
-  // }
   const [loggedIn, setLoggedIn] = useState(false)
   const [user, setUser] = useState(null)
-  // const decks = useSelector(state => state.decks.entities)
+  const decks = useSelector(state => state.decks.entities)
   // const user = useSelector(state => state.user.entities)
   const subjects = useSelector(state => state.subjects.entities)
   const [currentDeck, setCurrentDeck] = useState({})
   const dispatch = useDispatch()
 
-  console.log("user",user)
-  // console.log("user From Redux", userFromRedux)
-  // console.log("current deck", currentDeck)
+  console.log("decks",decks)
 
   useEffect(() => {
     //to users#show
@@ -67,8 +60,6 @@ function App() {
     setUser(userInfo)
     setLoggedIn(true)
   }
-  // console.log("decks in state", decks)
-  // console.log("subjects in state", subjects)
 
   const onLogout = () => {
     fetch("/logout", {
@@ -87,7 +78,7 @@ function App() {
    
       <Routes>
         <Route exact path="/" element={!!loggedIn ? <WelcomePage onLogout={onLogout} user={user}/> : <LoginPage onLogin={onLogin} />} />
-        <Route exact path="/subjects" element={ <SubjectsContainer subjects={subjects}/> } />
+        <Route exact path="/subjects" element={ <SubjectsContainer subjects={subjects} decks={decks}/> } />
         <Route exact path="/profile" element={ <Profile user={user} setUser={setUser} onLogout={onLogout} setCurrentDeck={setCurrentDeck}/> } />
         <Route exact path="/create" element={ <CreateDecks subjects={subjects} user={user} setUser={setUser}/> } />
         <Route exact path="/login" element={<LoginPage onLogin={onLogin} user={user}/>} />

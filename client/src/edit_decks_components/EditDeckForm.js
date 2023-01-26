@@ -3,9 +3,13 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import CardForm from '../create_decks_components/CardForm';
 import Container from 'react-bootstrap/Container';
+import { deckUpdated } from '../public_decks_components/publicDecksSlice';
+import { userUpdated } from '../profile_components/usersSlice';
+import { useDispatch } from 'react-redux';
 
 
 const EditDeckForm = ({ currentDeck, subjects, user }) => {
+    const dispatch = useDispatch()
     const blankCardTemplate = {
         question: "",
         answer: ""
@@ -34,8 +38,9 @@ const EditDeckForm = ({ currentDeck, subjects, user }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-
+        const formattedDeckInfo = { id: deckInput.id, changes: { name: deckInput.name } }
         deckInput.user_id = user.id
+        console.log("formatted", formattedDeckInfo)
 
         fetch(`/decks/${currentDeck.id}`, {
             method: "PATCH",
@@ -46,7 +51,8 @@ const EditDeckForm = ({ currentDeck, subjects, user }) => {
         })
             .then(res => {
                 if (res.ok) {
-                    res.json().then(deckInfo => console.log(deckInfo))
+                    res.json().then(deckInfo => dispatch(deckUpdated({ id: deckInput.id, changes: deckInfo })))
+                        .then(dispatch(userUpdated({ id: user.id, changes: { decks: deckInput } })))
                 } else {
                     res.json().then((errorData) => setErrors(errorData.errors))
                 }
@@ -57,9 +63,9 @@ const EditDeckForm = ({ currentDeck, subjects, user }) => {
 
     return (
         <div>
-            
+
             {currentDeck ? <Container style={{ width: '40rem' }}>
-            <h2>Editing: {currentDeck.name}</h2>
+                <h2>Editing: {currentDeck.name}</h2>
                 <Form onSubmit={handleSubmit}>
 
                     <Form.Group className="mb-3" controlId="formName">
@@ -87,7 +93,7 @@ const EditDeckForm = ({ currentDeck, subjects, user }) => {
                     </Button>
 
                     <Button variant="primary" type="submit">
-                        Save Deck
+                        Save Changes
                     </Button>
                 </Form>
                 {errors}

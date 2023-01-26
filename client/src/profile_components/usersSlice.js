@@ -1,5 +1,7 @@
 // import { v4 as uuid } from "uuid";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, createEntityAdapter } from "@reduxjs/toolkit";
+
+const userAdapter = createEntityAdapter()
 
 export const fetchUser = createAsyncThunk("users/fetchCurrentUser", () => {
     return fetch("/me")
@@ -17,15 +19,19 @@ const usersSlice = createSlice({
     initialState,
     reducers: {
         userAdded(state, action){
-            console.log("action payload in userAdded", action.payload)
-            state.entities.push(action.payload)
+            // console.log("action payload in userAdded", action.payload)
+            // state.user.entities.push(action.payload)
+            console.log("in userAdded", state.user)
+
         },
+        // userUpdated: userAdapter.upsertOne
         userUpdated(state, action){
-            const user = state.entities
-            console.log("user in slice. Was it found?", user)
-            console.log("payload", action.payload)
-            user.decks.push(action.payload)
-        },
+            // const user = state.entities
+            // console.log("user in slice. Was it found?", user)
+            // console.log("payload", action.payload)
+            // user.decks.push(action.payload)
+        }
+        ,
     },
     extraReducers: {
         // handle async actions: pending, fulfilled, rejected (for errors)

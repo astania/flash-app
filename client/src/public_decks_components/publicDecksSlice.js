@@ -1,10 +1,11 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, createEntityAdapter } from "@reduxjs/toolkit";
 
+// const decksAdapter = createEntityAdapter()
 
 export const fetchDecks = createAsyncThunk("decks/fetchDecks", () => {
   return fetch("/public_decks")
     .then((response) => response.json())
-    .then((data) => data);
+    .then((data) => data)
 });
 
 const initialState = {
@@ -19,10 +20,12 @@ const decksSlice = createSlice({
     deckAdded(state, action) {
       state.entities.push(action.payload)
     },
+    // deckUpdated: decksAdapter.upsertOne
     deckUpdated(state, action) {
-      const deck = state.entities.find((deck) => deck.id = action.payload.id)
-      deck.url = action.payload.url
-    },
+      const targetedDeck = state.entities.find((deck) => deck.id === action.payload.id);
+    
+    }
+    ,
     deckRemoved(state, action) {
       const index = state.entities.findIndex((deck) => deck.id === action.payload);
       state.entities.splice(index, 1);

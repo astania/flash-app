@@ -22,7 +22,7 @@ Card.create({deck_id: 3, question: "What is the plural of goose?", answer: "Gees
 Card.create({deck_id: 4, question: "Who founded Studio Ghibli?", answer: "Hayao Miyazaki"})
 
 Subject.create({name: "German Language"})
-Subject.create({name: "Mathmatics"})
+Subject.create({name: "Mathematics"})
 Subject.create({name: "English Language"})
 Subject.create({name: "Movies"})
 
@@ -32,9 +32,9 @@ UserDeck.create({user_id: 3, deck_id: 3})
 UserDeck.create({user_id: 1, deck_id: 4})
 
 
-DeckSubject.create({deck_id:1, subject_id: 1})
-DeckSubject.create({deck_id:2, subject_id: 2})
-DeckSubject.create({deck_id:3, subject_id: 3})
+DeckSubject.create({deck_id: 1, subject_id: 1})
+DeckSubject.create({deck_id: 2, subject_id: 2})
+DeckSubject.create({deck_id: 3, subject_id: 3})
 DeckSubject.create({deck_id: 4, subject_id: 4})
 
 pp "Done seeding"

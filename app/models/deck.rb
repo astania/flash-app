@@ -8,6 +8,8 @@ class Deck < ApplicationRecord
 
     has_many :cards  
 
+    # validates :subjects, presence: true
+
     # belongs_to :creator, :foreign_key => "user_id", :class_name => "User"
 
 end

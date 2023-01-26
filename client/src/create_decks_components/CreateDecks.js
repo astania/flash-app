@@ -20,11 +20,14 @@ const CreateDecks = ({ subjects, user, setUser }) => {
     name: "",
     subjects: "",
     public: true,
-    cards: [blankCardTemplate]
+    cards: [blankCardTemplate],
+    user_id: user.id
   }
 
   const [deckInput, setDeckInput] = useState(blankDeckTemplate)
   const [errors, setErrors] = useState([])
+
+  console.log("deck input", deckInput)
 
 
   const handleAddCardClick = () => {

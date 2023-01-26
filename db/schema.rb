@@ -30,7 +30,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_19_192123) do
   end
 
   create_table "decks", force: :cascade do |t|
-    t.integer "user_id"
     t.boolean "public"
     t.string "name"
     t.datetime "created_at", null: false

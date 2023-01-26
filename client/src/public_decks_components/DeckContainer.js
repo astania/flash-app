@@ -12,16 +12,6 @@ const DeckContainer = ({ deck, setCurrentDeck, user, setUser }) => {
   const dispatch = useDispatch()
 
 
-  // const handleDeckClick = () => {
-  //   fetch(`/decks/${deck.id}`)
-  //     .then((response) => {
-  //       if (response.ok) {
-  //         response.json().then((deckInfo) => console.log(deckInfo))
-  //         .then(setDeck(true))
-  //       }
-  //     })
-  // }
-
   const handleDeckClick = () => {
     setIsDeckSelected(!isDeckSelected)
   }
@@ -53,7 +43,7 @@ const DeckContainer = ({ deck, setCurrentDeck, user, setUser }) => {
       <div>
         {isDeckSelected ? <Card className="text-center" style={{ width: '18rem' }}>
           <Card.Body>
-            <Card.Title> {deck.name}</Card.Title>
+            <Card.Title as="div"> {deck.name}</Card.Title>
             <Card.Text as="div">
               <Button variant="primary" onClick={handleStudyClick}>Study</Button>
               <Button variant="secondary" onClick={handleEditClick} >Edit</Button>
