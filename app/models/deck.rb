@@ -10,7 +10,7 @@ class Deck < ApplicationRecord
 
     accepts_nested_attributes_for :users, :user_decks, :deck_subjects, :subjects, :cards
 
-    # validates :subjects, presence: true
+    validates :subjects, :name, :cards, presence: true
 
     # belongs_to :creator, :foreign_key => "user_id", :class_name => "User"
 

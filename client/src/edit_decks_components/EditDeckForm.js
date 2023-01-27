@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import CardForm from '../create_decks_components/CardForm';
 import Container from 'react-bootstrap/Container';
+import Alert from 'react-bootstrap/Alert';
 import { deckUpdated } from '../public_decks_components/publicDecksSlice';
 import { userUpdated } from '../profile_components/usersSlice';
 import { useDispatch } from 'react-redux';
@@ -18,8 +19,8 @@ const EditDeckForm = ({ currentDeck, subjects, user, setUser, decks }) => {
     }
 
     const userDecks = decks.filter(deck => deck.users.map(du => du.id).includes(user.id))
-    console.log("userDecks", userDecks)
-    
+
+
     const [deckInput, setDeckInput] = useState(currentDeck)
     const [errors, setErrors] = useState([])
 
@@ -55,9 +56,9 @@ const EditDeckForm = ({ currentDeck, subjects, user, setUser, decks }) => {
                 if (res.ok) {
                     res.json().then(deckInfo => dispatch(deckUpdated({ deckInfo })))
                         .then(dispatch(userUpdated(deckInput)))
-                        const updatedDecks = userDecks.map(deck => deck.id == deckInput.id ? deckInput : deck)
-                        setUser({...user, decks: updatedDecks})
-                        navigate("/profile")
+                    const updatedDecks = userDecks.map(deck => deck.id == deckInput.id ? deckInput : deck)
+                    setUser({ ...user, decks: updatedDecks })
+                    navigate("/profile")
                 } else {
                     res.json().then((errorData) => setErrors(errorData.errors))
                 }
@@ -72,6 +73,12 @@ const EditDeckForm = ({ currentDeck, subjects, user, setUser, decks }) => {
             {currentDeck ? <Container style={{ width: '40rem' }}>
                 <h2>Editing: {currentDeck.name}</h2>
                 <Form onSubmit={handleSubmit}>
+                    {errors.length > 0 ? <Alert variant="danger" >
+                        <Alert.Heading>Error</Alert.Heading>
+                        <ul>
+                            {errors.map((error, index) => <li key={index}>{error}</li>)}
+                        </ul>
+                    </Alert> : ""}
 
                     <Form.Group className="mb-3" controlId="formName">
                         <h3>Deck Name</h3>
@@ -101,7 +108,7 @@ const EditDeckForm = ({ currentDeck, subjects, user, setUser, decks }) => {
                         Save Changes
                     </Button>
                 </Form>
-                {errors}
+
             </Container> : <p>loading...</p>}
         </div>
     )

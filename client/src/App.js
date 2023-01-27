@@ -31,30 +31,25 @@ function App() {
   const [currentSubject, setCurrentSubject] = useState({})
   const dispatch = useDispatch()
 
-  console.log("decks", decks)
-  console.log("user", user)
 
   useEffect(() => {
     // to users#show
     fetch("/me").then((response) => {
       if (response.ok) {
         response.json().then((userInfo) => setUser(userInfo))
-        // .then(setLoggedIn(true))
       }
     })
 
     dispatch(fetchDecks())
     dispatch(fetchSubjects())
-    // dispatch(fetchUser())
+    dispatch(fetchUser())
 
-    // {user ? setLoggedIn(true) : setLoggedIn(false)}
   }, [])
 
 
   const onLogin = (userInfo) => {
     setUser(userInfo)
     dispatch(fetchUser())
-    // setLoggedIn(true)
   }
 
   const onLogout = () => {
@@ -63,7 +58,6 @@ function App() {
     })
     dispatch(userRemoved(user.id))
     setUser({})
-    // setLoggedIn(false)
   }
 
 
@@ -88,7 +82,5 @@ function App() {
     </BrowserRouter>
   );
 }
-
-//profile, createdecks
 
 export default App;

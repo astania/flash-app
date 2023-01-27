@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import CardForm from './CardForm';
 import Container from 'react-bootstrap/Container';
+import Alert from 'react-bootstrap/Alert';
 import { useDispatch } from 'react-redux';
 import { deckAdded } from '../public_decks_components/publicDecksSlice';
 import { useNavigate } from 'react-router-dom';
@@ -94,6 +95,12 @@ const CreateDecks = ({ subjects, user, setUser }) => {
 
           <Form.Group className="mb-3" controlId="formName">
             <h3>Deck Name</h3>
+            {errors.length > 0 ? <Alert variant="danger" >
+                        <Alert.Heading>Error</Alert.Heading>
+                        <ul>
+                            {errors.map((error, index) => <li key={index}>{error}</li>)}
+                        </ul>
+                    </Alert> : ""}
 
             <Form.Control type="text" placeholder="Algebra 301 Chapter 4 Quiz" name="name" onChange={handleChange} value={deckInput.name} />
 
@@ -120,7 +127,6 @@ const CreateDecks = ({ subjects, user, setUser }) => {
             Save Deck
           </Button>
         </Form>
-        {errors}
       </Container> : <p>loading...</p>}
     </div>
   )
