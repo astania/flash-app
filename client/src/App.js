@@ -81,7 +81,7 @@ function App() {
         <Route exact path="/login" element={<LoginPage onLogin={onLogin} user={user} />} />
         <Route path="profile/decks/:id" element={<DeckDisplay currentDeck={currentDeck} />} />
         <Route path="study/:id" element={<DeckDisplay currentDeck={currentDeck} />} />
-        <Route path="profile/decks/:id/edit" element={<EditDeckForm currentDeck={currentDeck} subjects={subjects} user={user} />} />
+        <Route path="profile/decks/:id/edit" element={<EditDeckForm currentDeck={currentDeck} subjects={subjects} user={user} setUser={setUser} decks={decks} />} />
         <Route path="subjects/decks/:id" element={<SingleSubject decks={decks} setCurrentDeck={setCurrentDeck} currentSubject={currentSubject} setCurrentSubject={setCurrentSubject} />} />
       </Routes>
       <Footer />

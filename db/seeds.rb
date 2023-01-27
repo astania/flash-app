@@ -31,7 +31,6 @@ UserDeck.create({user_id: 2, deck_id: 2})
 UserDeck.create({user_id: 3, deck_id: 3})
 UserDeck.create({user_id: 1, deck_id: 4})
 
-
 DeckSubject.create({deck_id: 1, subject_id: 1})
 DeckSubject.create({deck_id: 2, subject_id: 2})
 DeckSubject.create({deck_id: 3, subject_id: 3})

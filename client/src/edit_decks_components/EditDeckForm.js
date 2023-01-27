@@ -6,18 +6,22 @@ import Container from 'react-bootstrap/Container';
 import { deckUpdated } from '../public_decks_components/publicDecksSlice';
 import { userUpdated } from '../profile_components/usersSlice';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 
-const EditDeckForm = ({ currentDeck, subjects, user }) => {
+const EditDeckForm = ({ currentDeck, subjects, user, setUser, decks }) => {
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const blankCardTemplate = {
         question: "",
         answer: ""
     }
 
+    const userDecks = decks.filter(deck => deck.users.map(du => du.id).includes(user.id))
+    console.log("userDecks", userDecks)
+    
     const [deckInput, setDeckInput] = useState(currentDeck)
     const [errors, setErrors] = useState([])
-    // console.log("does this have the user?",deckInput)
 
     const handleAddCardClick = () => {
         const updatedCards = [...deckInput.cards, blankCardTemplate]
@@ -50,7 +54,10 @@ const EditDeckForm = ({ currentDeck, subjects, user }) => {
             .then(res => {
                 if (res.ok) {
                     res.json().then(deckInfo => dispatch(deckUpdated({ deckInfo })))
-                        // .then(dispatch(userUpdated({ id: user.id, changes: { decks: deckInput } })))
+                        .then(dispatch(userUpdated(deckInput)))
+                        const updatedDecks = userDecks.map(deck => deck.id == deckInput.id ? deckInput : deck)
+                        setUser({...user, decks: updatedDecks})
+                        navigate("/profile")
                 } else {
                     res.json().then((errorData) => setErrors(errorData.errors))
                 }

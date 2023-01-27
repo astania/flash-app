@@ -18,20 +18,16 @@ const decksSlice = createSlice({
   initialState,
   reducers: {
     deckAdded(state, action) {
-      console.log("deck added payload", action.payload)
       state.entities.push(action.payload)
     },
     // deckUpdated: decksAdapter.upsertOne
     deckUpdated(state, action) {
-      console.log("deck updated payload", action.payload.deckInfo.id)
-      let targetedDeck = state.entities.find((deck) => deck.id === action.payload.deckInfo.id);
-      console.log("targeted deck", targetedDeck)
-      targetedDeck = action.payload
+      let updatedDecks = state.entities.map((deck) => deck.id === action.payload.deckInfo.id ? action.payload.deckInfo : deck);
+      state.entities = updatedDecks
 
     }
     ,
     deckRemoved(state, action) {
-      console.log("deck removed payload", action.payload)
       const index = state.entities.findIndex((deck) => deck.id === action.payload);
       state.entities.splice(index, 1);
     },
