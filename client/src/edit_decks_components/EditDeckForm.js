@@ -38,9 +38,7 @@ const EditDeckForm = ({ currentDeck, subjects, user }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const formattedDeckInfo = { id: deckInput.id, changes: { name: deckInput.name } }
         deckInput.user_id = user.id
-        console.log("formatted", formattedDeckInfo)
 
         fetch(`/decks/${currentDeck.id}`, {
             method: "PATCH",
@@ -51,8 +49,8 @@ const EditDeckForm = ({ currentDeck, subjects, user }) => {
         })
             .then(res => {
                 if (res.ok) {
-                    res.json().then(deckInfo => dispatch(deckUpdated({ id: deckInput.id, changes: deckInfo })))
-                        .then(dispatch(userUpdated({ id: user.id, changes: { decks: deckInput } })))
+                    res.json().then(deckInfo => dispatch(deckUpdated({ deckInfo })))
+                        // .then(dispatch(userUpdated({ id: user.id, changes: { decks: deckInput } })))
                 } else {
                     res.json().then((errorData) => setErrors(errorData.errors))
                 }

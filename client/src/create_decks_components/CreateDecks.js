@@ -69,14 +69,12 @@ const CreateDecks = ({ subjects, user, setUser }) => {
               const updatedUserDecks = [...user.decks]
               updatedUserDecks.push(deckInfo)
               setUser({ ...user, decks: updatedUserDecks })
-              setDeckInput(blankDeckTemplate)
               navigate("/profile")
               
             } else {
               const updatedUserDecks = [...user.decks]
               updatedUserDecks.push(deckInfo)
               setUser({ ...user, decks: updatedUserDecks })
-              setDeckInput(blankDeckTemplate)
               navigate("/profile")
             }
           })
