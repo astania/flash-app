@@ -1,6 +1,7 @@
 class DecksController < ApplicationController
 
       # skip_before_action :authorized, only: :create
+  # wrap_parameters false
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
   rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity
 
@@ -10,12 +11,13 @@ class DecksController < ApplicationController
   end 
   
   def create
-    pp params
-    deck = Deck.create!(public: params[:public], name: params[:name])
-    user_deck = UserDeck.create!(deck_id: deck.id, user_id: params[:user_id]) 
-    # params[:users].each{|user| UserDeck.create!(deck_id: deck.id, user_id: users[:id] )}
-    deck_subject = DeckSubject.create!(deck_id: deck.id, subject_id: params[:subjects])
-    params[:cards].each{|card| Card.create!(deck_id: deck.id, question: card[:question], answer: card[:answer])}
+    pp params[:deck]
+    deck = Deck.create(name: params[:deck][:name], public: params[:deck][:public])
+  
+    user_deck = UserDeck.create!(deck_id: deck.id, user_id: params[:deck][:user_id]) 
+    # # params[:users].each{|user| UserDeck.create!(deck_id: deck.id, user_id: users[:id] )}
+    deck_subject = DeckSubject.create!(deck_id: deck.id, subject_id: params[:deck][:subjects])
+    params[:deck][:cards].each{|card| Card.create!(deck_id: deck.id, question: card[:question], answer: card[:answer])}
     render json: deck, status: :created
   end
   
@@ -52,7 +54,7 @@ class DecksController < ApplicationController
   end 
 
   def deck_params 
-    params.require(:deck).permit(:public, :name, :subjects, :user_id, cards: [:id, :question, :answer])
+    params.permit( deck: [:public, :name, :subjects, :user_id, cards: [:question, :answer]])
   end 
   
   def render_unprocessable_entity(invalid)

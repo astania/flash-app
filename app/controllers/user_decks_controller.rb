@@ -6,8 +6,10 @@ class UserDecksController < ApplicationController
       end 
       
       def create
+        user = User.find_by(id: session[:user_id])
         user_deck = UserDeck.create!(user_deck_params)
-        render json: user_deck, status: :created
+        
+        render json: user, include: ['decks', 'decks.cards']
       end
       
       def update 

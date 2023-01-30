@@ -2,18 +2,17 @@ import React, { useState } from 'react'
 import FlashCard from './FlashCard'
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { deckSaved } from '../public_decks_components/publicDecksSlice';
 
-const DeckDisplay = ({ currentDeck, setUser, user }) => {
-    // const currentUser = useSelector(state => state.user.entities)
-    const [errors, setErrors] = useState([])
+const PublicDeckDisplay = ({ currentDeck, setUser }) => {
+    
+    const currentUser = useSelector(state => state.user.entities)
     const dispatch = useDispatch()
     const [currentIndex, setCurrentIndex] = useState(0)
     const [currentCard, setCurrentCard] = useState(currentDeck.cards[currentIndex])
     const [flipToAnswer, setFlipToAnswer] = useState(false)
-    const deckBelongsToUser = user.decks.filter(deck => deck.id === currentDeck.id)
-    
+    const deckBelongsToUser = currentUser.decks.filter(deck => deck.id === currentDeck.id)
 
     const handleNextClick = () => {
         if (currentIndex < currentDeck.cards.length - 1) {
@@ -34,38 +33,20 @@ const DeckDisplay = ({ currentDeck, setUser, user }) => {
     }
 
     const handleSaveClick = () => {
-        const updatedUsersArray = [...currentDeck.users, user]
+        const updatedUsersArray = [...currentDeck.users, currentUser]
         const updatedDeck = {...currentDeck, users: updatedUsersArray}
 
-        const updatedUserDeckArray = [...user.decks, currentDeck]
-        const updatedUser = {...user, decks: updatedUserDeckArray}
-    
-        console.log("did user update?", updatedUser)
-        dispatch(deckSaved({deck: updatedDeck, user: user}))
+        const updatedUserDeckArray = [...currentUser.decks, currentDeck]
+        setUser({...currentUser, decks: updatedUserDeckArray})
+        
 
-        fetch(`/user_decks`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({user_id: user.id, deck_id: currentDeck.id}),
-        })
-            .then(res => {
-                if (res.ok) {
-                    res.json().then(userInfo => setUser(userInfo))
-                        .then(setErrors([]))
-
-                } else {
-                    res.json().then((errorData) => setErrors(errorData.errors))
-
-                }
-            })
+        // dispatch(deckSaved({deck: updatedDeck, user: currentUser}))
 
     }
 
     return (
         <div>
-            {currentDeck.cards.length > 0 ? <Container className="text-center" >
+            {currentDeck ? <Container className="text-center" >
                 <h3>{currentDeck.name}</h3>
                 {currentCard ? <FlashCard currentCard={currentCard} flipToAnswer={flipToAnswer} setFlipToAnswer={setFlipToAnswer} /> : <p>...loading</p>}
                 <Button variant="secondary" onClick={() => handlePreviousClick()}>Previous</Button>
@@ -73,7 +54,6 @@ const DeckDisplay = ({ currentDeck, setUser, user }) => {
                 <p>{currentIndex + 1} of {currentDeck.cards.length}</p>
                 <em><p>Click the card to see the answer!</p></em>
                 {deckBelongsToUser.length === 0 ? <Button onClick={handleSaveClick} >Save Deck to Your Profile</Button> : ""}
-                {errors}
             </Container>
 
                 : <p>...loading</p>}
@@ -82,4 +62,4 @@ const DeckDisplay = ({ currentDeck, setUser, user }) => {
     )
 }
 
-export default DeckDisplay
+export default PublicDeckDisplay

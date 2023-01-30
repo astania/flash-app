@@ -30,8 +30,9 @@ class UsersController < ApplicationController
 
   def update 
     find_user
+    added_deck = UserDeck.create!(deck_id: added_deck[:deck_id], user_id: added_deck[:user_id])
     if @user&.update!(user_params) 
-      render json: @user
+      render json: @user, include: ['decks', 'decks.cards']
     end 
   end 
 
@@ -49,7 +50,7 @@ class UsersController < ApplicationController
   end 
 
   def user_params 
-    params.permit(:email, :profile_image)
+    params.permit(:email, :profile_image, decks: [:id, :cards, :public, :name, :users, :addedDeck],)
   end 
   
   def render_unprocessable_entity(invalid)

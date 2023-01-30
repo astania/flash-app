@@ -4,5 +4,7 @@ class DeckSerializer < ActiveModel::Serializer
   has_many :users
   has_many :cards
   has_many :subjects, through: :deck_subjects
+
+
   
 end

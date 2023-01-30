@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, createEntityAdapter } from "@reduxjs/toolkit";
+import { userUpdated } from "../profile_components/usersSlice";
 
 // const decksAdapter = createEntityAdapter()
 
@@ -31,6 +32,14 @@ const decksSlice = createSlice({
       const index = state.entities.findIndex((deck) => deck.id === action.payload);
       state.entities.splice(index, 1);
     },
+    deckSaved(state, action) {
+      // receives deck object and user object
+      console.log("payload", action.payload)
+      const updatedDecks = state.entities.map(deck => deck.id === action.payload.deck.id ? action.payload.deck : deck)
+      // console.log("updatedDecks in slice",updatedDecks)
+      state.entities = updatedDecks
+      console.log("did these get updated?", state.entities)
+    }
   },
   extraReducers: {
     // handle async actions: pending, fulfilled, rejected (for errors)
@@ -44,6 +53,6 @@ const decksSlice = createSlice({
   },
 })
 
-export const { deckAdded, deckUpdated, deckRemoved } = decksSlice.actions
+export const { deckAdded, deckUpdated, deckRemoved, deckSaved } = decksSlice.actions
 
 export default decksSlice.reducer

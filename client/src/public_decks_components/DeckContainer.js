@@ -6,7 +6,7 @@ import { deckRemoved } from './publicDecksSlice';
 import { useDispatch } from 'react-redux';
 
 
-const DeckContainer = ({ deck, setCurrentDeck, user, setUser }) => {
+const DeckContainer = ({ deck, setCurrentDeck, user, setUser, navigation }) => {
   const [isDeckSelected, setIsDeckSelected] = useState(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -19,7 +19,9 @@ const DeckContainer = ({ deck, setCurrentDeck, user, setUser }) => {
 
   const handleStudyClick = () => {
     setCurrentDeck(deck)
-    navigate(`decks/${deck.id}`)
+    navigate(`decks/${deck.id}`, {
+      state: { decks: user.decks, name: user.name }
+    })
   }
 
   const handleEditClick = () => {
@@ -29,9 +31,9 @@ const DeckContainer = ({ deck, setCurrentDeck, user, setUser }) => {
 
   const handleDeleteClick = () => {
     dispatch(deckRemoved(deck.id))
-    const filteredDecks = user.decks.filter(d => d.id !== deck.id )
-    setUser({...user, decks: filteredDecks})
-    
+    const filteredDecks = user.decks.filter(d => d.id !== deck.id)
+    setUser({ ...user, decks: filteredDecks })
+
     fetch(`/decks/${deck.id}`, {
       method: "DELETE",
     })
