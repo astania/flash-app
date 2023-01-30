@@ -19,9 +19,9 @@ const SingleSubject = ({ currentSubject, setCurrentSubject, setCurrentDeck, deck
     }
 
     return (
-        <div>SingleSubject
+        <div>
+            <h3>Public {currentSubject.name} Decks:</h3>
            {subjectDecks.length > 0 ? subjectDecks.map(deck => <Button key={deck.id} onClick={handleClick} value={deck.id} >{deck.name}</Button>) : <p>No decks have been created for this subject</p>}
-            {currentSubject.name}
         </div>
     )
 }

@@ -54,7 +54,7 @@ class DecksController < ApplicationController
   end 
 
   def deck_params 
-    params.permit( deck: [:public, :name, :subjects, :user_id, cards: [:question, :answer]])
+    params.permit( :public, :name, :subjects, :user_id, cards: [:question, :answer])
   end 
   
   def render_unprocessable_entity(invalid)

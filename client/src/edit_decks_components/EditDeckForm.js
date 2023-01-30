@@ -50,7 +50,7 @@ const EditDeckForm = ({ currentDeck, subjects, user, setUser, decks }) => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(deckInput),
+            body: JSON.stringify({deck: deckInput}),
         })
             .then(res => {
                 if (res.ok) {
@@ -89,7 +89,7 @@ const EditDeckForm = ({ currentDeck, subjects, user, setUser, decks }) => {
 
                         <Form.Select aria-label="subject" name="subjects" onChange={handleChange}>
                             <option>Subject:</option>
-                            {subjects.map(subj => <option key={subj.id} value={parseInt(subj.id)}>{subj.name}</option>)}
+                            {subjects.map(subj => <option key={subj.id} value={subj.id}>{subj.name}</option>)}
                         </Form.Select>
 
                         <Form.Label>Do you want to make this deck public?</Form.Label>

@@ -52,7 +52,6 @@ const CreateDecks = ({ subjects, user, setUser }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log("going to backend", deckInput)
 
     fetch("/decks", {
       method: "POST",
@@ -65,7 +64,6 @@ const CreateDecks = ({ subjects, user, setUser }) => {
         if (res.ok) {
           res.json().then(deckInfo => {
             if (deckInfo.public) {
-              console.log("public")
               dispatch(deckAdded(deckInfo))
               const updatedUserDecks = [...user.decks]
               updatedUserDecks.push(deckInfo)
@@ -73,7 +71,6 @@ const CreateDecks = ({ subjects, user, setUser }) => {
               navigate("/profile")
               
             } else {
-              console.log('not public')
               const updatedUserDecks = [...user.decks]
               updatedUserDecks.push(deckInfo)
               setUser({ ...user, decks: updatedUserDecks })

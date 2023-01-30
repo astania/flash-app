@@ -29,11 +29,6 @@ function App() {
   const [currentSubject, setCurrentSubject] = useState({})
   const dispatch = useDispatch()
 
-  // console.log("currentDeck", currentDeck)
-
-  // console.log("user in app",user)
-
- console.log("did user update IN APP?", user)
 
 
   useEffect(() => {
