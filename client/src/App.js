@@ -10,12 +10,13 @@ import Footer from "./navigation_components/Footer";
 import Header from "./navigation_components/Header";
 import DeckDisplay from "./deck_display_components/DeckDisplay";
 import EditDeckForm from "./edit_decks_components/EditDeckForm";
-import { fetchUser, userRemoved } from "./profile_components/usersSlice";
+import { fetchUser } from "./profile_components/usersSlice";
 import { fetchDecks } from "./public_decks_components/publicDecksSlice";
 import { fetchSubjects } from "./subject_components/subjectsSlice";
 import { useDispatch, useSelector } from 'react-redux';
 import SingleSubject from "./subject_components/SingleSubject";
 import PublicDeckDisplay from "./deck_display_components/PublicDeckDisplay";
+
 
 // sudo service postgresql start
 
@@ -28,8 +29,7 @@ function App() {
   const [currentDeck, setCurrentDeck] = useState({})
   const [currentSubject, setCurrentSubject] = useState({})
   const dispatch = useDispatch()
-
-
+  
 
   useEffect(() => {
     // to users#show
@@ -55,8 +55,9 @@ function App() {
     fetch("/logout", {
       method: "DELETE"
     })
-    dispatch(userRemoved(user.id))
+    //dispatch(userRemoved(user.id))
     setUser({})
+    
   }
 
 
@@ -64,10 +65,10 @@ function App() {
 
     <BrowserRouter>
       <Header />
-      {user ? <Navigation onLogout={onLogout} /> : ""}
+      {user && user.email ? <Navigation onLogout={onLogout} /> : ""}
 
       <Routes>
-        <Route exact path="/" element={user ? <WelcomePage onLogout={onLogout} user={user} /> : <LoginPage onLogin={onLogin} />} />
+        <Route exact path="/" element={user && user.email ? <WelcomePage onLogout={onLogout} user={user} /> : <LoginPage onLogin={onLogin} />} />
         <Route exact path="/subjects" element={<SubjectsContainer subjects={subjects} decks={decks} setCurrentSubject={setCurrentSubject} currentSubject={currentSubject} />} />
         <Route exact path="/profile" element={<Profile user={user} setUser={setUser} onLogout={onLogout} setCurrentDeck={setCurrentDeck} />} />
         <Route exact path="/create" element={<CreateDecks subjects={subjects} user={user} setUser={setUser} />} />

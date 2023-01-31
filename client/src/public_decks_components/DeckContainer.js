@@ -33,10 +33,11 @@ const DeckContainer = ({ deck, setCurrentDeck, user, setUser, navigation }) => {
     dispatch(deckRemoved(deck.id))
     const filteredDecks = user.decks.filter(d => d.id !== deck.id)
     setUser({ ...user, decks: filteredDecks })
-
-    fetch(`/decks/${deck.id}`, {
-      method: "DELETE",
-    })
+    if(!deck.public){
+      fetch(`/decks/${deck.id}`, {
+        method: "DELETE",
+      })
+    }
   }
 
   return (

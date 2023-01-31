@@ -7,7 +7,7 @@ const SingleSubject = ({ currentSubject, setCurrentSubject, setCurrentDeck, deck
     const [deckIsChosen, setDeckIsChosen] = useState(false)
     const navigate = useNavigate()
     const subjectDecks = decks.filter(deck => deck.subjects.map(ds => ds.name).includes(currentSubject.name))
-    console.log("subject decks", subjectDecks)
+    // console.log("subject decks", subjectDecks)
 
 
     const handleClick = (e) => {

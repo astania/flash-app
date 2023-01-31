@@ -13,7 +13,6 @@ const Subject = ({ sub, setCurrentSubject, currentSubject }) => {
     const  handleClick = () => {
         setCurrentSubject(sub)
         navigate(`decks/${currentSubject.id}`)
-        console.log("current Subject", currentSubject)
     }
 
     return (

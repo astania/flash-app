@@ -40,8 +40,8 @@ const DeckDisplay = ({ currentDeck, setUser, user }) => {
         const updatedUserDeckArray = [...user.decks, currentDeck]
         const updatedUser = {...user, decks: updatedUserDeckArray}
     
-        console.log("did user update?", updatedUser)
-        dispatch(deckSaved({deck: updatedDeck, user: user}))
+        
+        dispatch(deckSaved({deck: updatedDeck, user: updatedUser}))
 
         fetch(`/user_decks`, {
             method: "POST",

@@ -29,7 +29,6 @@ function LoginForm({ onLogin }) {
             })
             document.getElementById("signInDiv").hidden = true
             navigate("/")
-
     }
 
     useEffect(() => {
