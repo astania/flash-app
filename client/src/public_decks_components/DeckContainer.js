@@ -6,14 +6,13 @@ import { deckRemoved } from './publicDecksSlice';
 import { useDispatch } from 'react-redux';
 
 
-const DeckContainer = ({ deck, setCurrentDeck, user, setUser, navigation }) => {
+const DeckContainer = ({ deck, setCurrentDeck, user, setUser }) => {
   const [isDeckSelected, setIsDeckSelected] = useState(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
 
   const handleDeckClick = () => {
-
     setIsDeckSelected(!isDeckSelected)
   }
 
@@ -33,11 +32,10 @@ const DeckContainer = ({ deck, setCurrentDeck, user, setUser, navigation }) => {
     dispatch(deckRemoved(deck.id))
     const filteredDecks = user.decks.filter(d => d.id !== deck.id)
     setUser({ ...user, decks: filteredDecks })
-    if(!deck.public){
-      fetch(`/decks/${deck.id}`, {
-        method: "DELETE",
-      })
-    }
+    fetch(`/decks/${deck.id}`, {
+      method: "DELETE",
+    })
+
   }
 
   return (

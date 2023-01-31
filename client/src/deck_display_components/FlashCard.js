@@ -11,7 +11,7 @@ const FlashCard = ({ currentCard, setFlipToAnswer, flipToAnswer }) => {
 
     return (
         <div>
-            <Card onClick={handleClick} className="text-center" style={{ width: '30rem' }}>
+            <Card onClick={handleClick} className="text-center flashcard" style={{ width: '30rem' }}>
                 <Card.Body>
                     <Card.Title>{flipToAnswer ? currentCard.answer : currentCard.question}</Card.Title>
                     <Card.Text>

@@ -7,10 +7,13 @@ import Alert from 'react-bootstrap/Alert';
 import { useDispatch } from 'react-redux';
 import { deckAdded } from '../public_decks_components/publicDecksSlice';
 import { useNavigate } from 'react-router-dom';
+import { subjectAdded } from '../subject_components/subjectsSlice';
 // import { userUpdated } from '../profile_components/usersSlice';
 
 const CreateDecks = ({ subjects, user, setUser }) => {
 
+  const [otherSelected, setOtherSelected] = useState(false)
+  const [newSubject, setNewSubject] = useState("")
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -39,12 +42,35 @@ const CreateDecks = ({ subjects, user, setUser }) => {
     setDeckInput(updatedDeck)
   }
 
+  const handleSubjectChange = (e) => {
+    setNewSubject(e.target.value)
+  }
+
+  const handleSaveSubject = () => {
+    fetch("/subjects", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name: newSubject }),
+    }).then(res => res.json()).then(subjInfo => {
+      setDeckInput({...deckInput, subjects: subjInfo.id})
+      dispatch(subjectAdded(subjInfo))
+      setOtherSelected(false)
+    })
+  }
+
   const handleChange = (e) => {
     let value = e.target.value
     let name = e.target.name
+    setOtherSelected(false)
 
     if (e.target.type === "checkbox") {
       value = e.target.checked
+    }
+
+    if (value === "other") {
+      setOtherSelected(true)
     }
 
     setDeckInput({ ...deckInput, [name]: value })
@@ -58,7 +84,7 @@ const CreateDecks = ({ subjects, user, setUser }) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({deck: deckInput}),
+      body: JSON.stringify({ deck: deckInput }),
     })
       .then(res => {
         if (res.ok) {
@@ -69,7 +95,7 @@ const CreateDecks = ({ subjects, user, setUser }) => {
               updatedUserDecks.push(deckInfo)
               setUser({ ...user, decks: updatedUserDecks })
               navigate("/profile")
-              
+
             } else {
               const updatedUserDecks = [...user.decks]
               updatedUserDecks.push(deckInfo)
@@ -94,11 +120,11 @@ const CreateDecks = ({ subjects, user, setUser }) => {
           <Form.Group className="mb-3" controlId="formName">
             <h3>Deck Name</h3>
             {errors.length > 0 ? <Alert variant="danger" >
-                        <Alert.Heading>Error</Alert.Heading>
-                        <ul>
-                            {errors.map((error, index) => <li key={index}>{error}</li>)}
-                        </ul>
-                    </Alert> : ""}
+              <Alert.Heading>Error</Alert.Heading>
+              <ul>
+                {errors.map((error, index) => <li key={index}>{error}</li>)}
+              </ul>
+            </Alert> : ""}
 
             <Form.Control type="text" placeholder="Algebra 301 Chapter 4 Quiz" name="name" onChange={handleChange} value={deckInput.name} />
 
@@ -107,7 +133,11 @@ const CreateDecks = ({ subjects, user, setUser }) => {
             <Form.Select aria-label="subject" name="subjects" onChange={handleChange}>
               <option>Subject:</option>
               {subjects.map(subj => <option key={subj.id} value={parseInt(subj.id)}>{subj.name}</option>)}
+              <option value="other">Other</option>
+              
             </Form.Select>
+            {otherSelected ? <Form.Control type="text" placeholder="Enter subject" name="subject" onChange={handleSubjectChange} value={newSubject} /> : ""}
+            {otherSelected ? <Button onClick={handleSaveSubject}> Save Subject </Button> : ""}
 
             <Form.Label>Do you want to make this deck public?</Form.Label>
 
